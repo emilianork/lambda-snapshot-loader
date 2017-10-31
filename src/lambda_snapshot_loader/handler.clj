@@ -5,7 +5,8 @@
   (:require [clojure.data.json :as json]
             [clojure.string :as s]
             [clojure.java.io :as io]
-            [lambda-snapshot-loader.s3 :as s3])
+            [lambda-snapshot-loader.s3 :as s3]
+            [lambda-snapshot-loader.mysql :as mysql])
 
   (:import java.io.File))
 
@@ -15,7 +16,9 @@
   (prn "--------------------------------------")
   (prn "Event:")
   (json/pprint event)
+
   (s3/get-snapshot filename)
+  (mysql/load-snapshot filename)
 
   {:event-time (get-in event [:time])
    :source (get-in event [:source])}

@@ -1,14 +1,12 @@
 # lambda-snapshot-loader
 
-A Clojure library designed to ... well, that part is up to you.
+A Clojure Lambda that downloads from S3 a SQL snapshot, which is then 
+execute into the aurora database call `testing`.
 
 ## Usage
 
-FIXME
+#### Build using 
 
-## License
+```$ lein uberjar```
 
-Copyright © 2017 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+The file to be upload is: ```target/lambda-snapshot-loader-0.1.0-SNAPSHOT-standalone.jar```
