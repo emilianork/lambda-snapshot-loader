@@ -1,16 +1,21 @@
 (ns lambda-snapshot-loader.handler
   (:gen-class
    :implements [com.amazonaws.services.lambda.runtime.RequestStreamHandler])
+
   (:require [clojure.data.json :as json]
             [clojure.string :as s]
             [clojure.java.io :as io]
-            [lambda-snapshot-loader.s3 :as s3]))
+            [lambda-snapshot-loader.s3 :as s3])
+
+  (:import java.io.File))
+
+(def filename (java.io.File. "/tmp/snapshot.sql"))
 
 (defn handle-event [event]
   (prn "--------------------------------------")
   (prn "Event:")
   (json/pprint event)
-  (s3/get-snapshot)
+  (s3/get-snapshot filename)
 
   {:event-time (get-in event [:time])
    :source (get-in event [:source])}

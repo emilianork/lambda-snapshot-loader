@@ -2,19 +2,16 @@
 
   (:use [amazonica.aws.s3]
         [amazonica.core]
-        [clojure.pprint])
-
-  (:import java.io.File))
+        [clojure.pprint]))
 
 (def bucket-name "lambda-snapshot-launcher")
 (def object-name "snapshot-testing.sql")
-(def download-file (java.io.File. (str "/tmp/" object-name)))
 
-(defn get-snapshot []
+(defn get-snapshot [filename]
   (let [obj (get-object
              :bucket-name bucket-name
              :key object-name
              :region "us-west-1")
 
         in (:input-stream obj)]
-    (clojure.java.io/copy in download-file)))
+    (clojure.java.io/copy in filename)))
