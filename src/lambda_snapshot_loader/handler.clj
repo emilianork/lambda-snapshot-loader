@@ -3,13 +3,19 @@
    :implements [com.amazonaws.services.lambda.runtime.RequestStreamHandler])
   (:require [clojure.data.json :as json]
             [clojure.string :as s]
-            [clojure.java.io :as io]))
+            [clojure.java.io :as io]
+            [lambda-snapshot-loader.s3 :as s3]))
 
 (defn handle-event [event]
+  (prn "--------------------------------------")
+  (prn "Event:")
   (json/pprint event)
+  (s3/get-snapshot)
 
   {:event-time (get-in event [:time])
-   :source (get-in event [:source])})
+   :source (get-in event [:source])}
+
+  (prn "--------------------------------------"))
 
 (defn key->keyword [key-string]
   (-> key-string
